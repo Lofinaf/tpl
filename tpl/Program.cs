@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using tpl.Interplitator;
 
 namespace tpl
 {
@@ -10,8 +11,8 @@ namespace tpl
     {
         private protected enum _argstype
         {
-            i,
-            argtoi
+            c, // Run File
+            argtoi // Path to file
         }
 
     }
@@ -20,6 +21,8 @@ namespace tpl
     {
         static void Main(string[] args)
         {
+            Compiler.RuninSafeMod("Тест тест2 звезда");
+            Console.ReadKey(true);
         }
     }
 }

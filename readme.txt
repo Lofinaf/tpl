@@ -6,7 +6,7 @@ Scheme:
 	[->------------------>----------------->--------->-------|]
 	[Run Command(CommandRate)-----<-----Interplit. foreach(tokens, i, v)-<-]
 
-Directory:
+sln:
 	|
 	|
 	Lexer.dll
@@ -17,7 +17,14 @@ Directory:
 	|
 	tpl.exe
 	|	|
+	|	|
+	|	|
 	|	|_______ void Readargs();
+	|	|_______ Compiler.cs
+	|	|		 |
+	|	|		 |_____ Stack<> for stack tpl
+	|	|		 |_____ Dictionary<> for variables
+	|	|		 |_____ And other tools for tlp
 	|	|_______ enum argstype;
 	|	|_______ void Main();
 	|
