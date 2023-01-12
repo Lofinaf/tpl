@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using tpl.Interplitator;
 
 namespace tpl
@@ -21,7 +17,7 @@ namespace tpl
     {
         static void Main(string[] args)
         {
-            Compiler.RuninSafeMod("Тест тест2 звезда");
+            Compiler.RuninSafeMod(System.IO.File.ReadAllText("test.tpl"));
             Console.ReadKey(true);
         }
     }
