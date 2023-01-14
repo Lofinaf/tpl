@@ -20,7 +20,12 @@ namespace tpl.Interplitator
         #region RunAndDebug 
         public static bool RuninSafeMod(string Source)
         {
-            Lexer.RunTokens(Lexer.RunSource(Source), ref Scope, ref Variables, Lexer.Param.safed);
+            LexerTpl.ReadTokens(LexerTpl.ToTokens(Source), ref Scope, ref Variables, Lexer.Param.def);
+            return true;
+        }
+        public static bool RuninSafeModWithDebug(string Source)
+        {
+            LexerTpl.ReadTokens(LexerTpl.ToTokens(Source), ref Scope, ref Variables, Lexer.Param.debug);
             return true;
         }
         #endregion
