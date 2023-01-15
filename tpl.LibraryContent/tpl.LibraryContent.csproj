@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Lexer.cs" />
+    <Compile Include="Exception.cs" />
     <Compile Include="Run.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RunParam.cs" />

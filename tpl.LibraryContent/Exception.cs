@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace tpl.LibraryContent
 {
-    public class Lexer
+    public class Exception
     {
         #region ErrorThrowingParam
         private protected static string[] _aboutErrorsEN =
@@ -21,12 +17,12 @@ namespace tpl.LibraryContent
 
         public enum ThrowErrors : int
         {
-            UNKNOWNSYBMOL = 0,
-            LSQNOTFOUND = 5,
-            INTYPEISSTRING = 10,
-            SPECIFICSTR = 12,
-            OPERATORERR = 2,
-            VARCANBEDECLARED = 2,
+            UNKNOWNSYBMOL,
+            LSQNOTFOUND,
+            INTYPEISSTRING,
+            SPECIFICSTR,
+            OPERATORERR,
+            VARCANBEDECLARED,
         }
 
         public static void ThrowError(ThrowErrors Error, int Line, string Word, int Id)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using static tpl.LibraryContent.Lexer;
+using static tpl.LibraryContent.Exception;
 
 namespace tpl.LibraryContent
 {

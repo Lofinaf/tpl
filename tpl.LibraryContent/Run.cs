@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using tpl.Runtime.Results;
 
-using static tpl.LibraryContent.Lexer;
+using static tpl.LibraryContent.Exception;
 
 namespace tpl.LibraryContent
 {
     public partial class Run
     {
-        public static void ReadTokens(List<string> Tokens, ref Stack<string> Stack, ref Dictionary<string, string> Variables, Param param)
+        public static InterpreterResult ReadTokens(List<string> Tokens, ref Stack<string> Stack, ref Dictionary<string, string> Variables, Param param)
         {
+            var Result = new InterpreterResult();
+
             int line = 1;
             for (int pos = 0; pos < Tokens.Count; pos++)
             {
@@ -66,7 +69,7 @@ namespace tpl.LibraryContent
                         {
                             Variables.Add(Tokens[pos + 1], "null");
                         }
-                        catch (Exception)
+                        catch (System.Exception)
                         {
                             ThrowError(ThrowErrors.VARCANBEDECLARED, line, Tokens[pos], 5);
                         }
@@ -109,7 +112,7 @@ namespace tpl.LibraryContent
                                         {
                                             ValueToWrite += $"{Variables[Token]}";
                                         }
-                                        catch (Exception)
+                                        catch (System.Exception)
                                         {
                                             ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 3);
                                         }
@@ -127,7 +130,7 @@ namespace tpl.LibraryContent
                                         {
                                             ValueToWrite += $" {Variables[Token]}";
                                         }
-                                        catch (Exception)
+                                        catch (System.Exception)
                                         {
                                             ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 10);
                                         }
@@ -141,12 +144,13 @@ namespace tpl.LibraryContent
                             break;
                         }
                         ThrowError(ThrowErrors.LSQNOTFOUND, 2);
-                        return;
+                        return Result;
 
                     default:
                         break;
                 }
             }
+            return Result;
         }
     }
 }
