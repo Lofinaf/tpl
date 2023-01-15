@@ -1,103 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using static tpl.LibraryContent.Lexer;
+
 namespace tpl.LibraryContent
 {
     public class Run
     {
-        private const int _maxWords = 10000; 
-
-        #region ErrorThrowingParam
-        private protected static string[] _aboutErrorsEN =
-        {
-            "Unknown Symbol",
-            "Uncorrect file!",
-            "\"(\" not found",
-            "You try to print integer, but you value this is string",
-            "String is specific",
-            "Error operator using",
-        };
-
-        public enum ThrowErrors : int
-        {
-            UNKNOWNSYBMOL = 0,
-            LSQNOTFOUND = 5,
-            INTYPEISSTRING = 10,
-            SPECIFICSTR = 2,
-            OPERATORERR = 2,
-        }
-
-        public static void ThrowError(ThrowErrors Error, int Line, string Word, int Id)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}, line: {Line}, char: {Word}; {_aboutErrorsEN[Id]}");
-            Console.ResetColor();
-        }
-        public static void ThrowError(ThrowErrors Error, int Line, int Id)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}, line: {Line}; {_aboutErrorsEN[Id]}");
-            Console.ResetColor();
-        }
-        public static void ThrowError(ThrowErrors Error, int Id)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}; {_aboutErrorsEN[Id]}");
-            Console.ResetColor();
-        }
-        #endregion
-
-        public static bool IsTokenKey(string text)
-        {
-            foreach (var item in Enum.GetValues(typeof(TokenTypes)))
-            {
-                if (text == item.ToString())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static bool IsNumber(string text)
-        {
-            return int.TryParse(text, out int i);
-        }
-        public static bool IsSign(string text)
-        {
-            return (text == "=");
-        }
-        public static bool IsDot(string text)
-        {
-            return (text == ".");
-        }
-        public static bool IsSemicolon(string text)
-        {
-            return (text == ";");
-        }
-        public static bool IsBracket(string text)
-        {
-            return text == "(" || text == ")" || text == "\"" || text == "{" || text == "}";
-        }
-
-        public static string Lex(string text)
-        {
-            string ret = "";
-            string word = "";
-            foreach (var item in text)
-            {
-                if (char.IsWhiteSpace(item) || IsBracket(item.ToString()) || IsSemicolon(item.ToString()) || IsDot(item.ToString()))
-                {
-                    word += $" {item}";
-                    ret += $" {word}";
-                    word = "";
-                    continue;
-                }
-                word += $"{item}";
-                continue;
-            }
-            return ret;
-        }
+        private const int _maxWords = 10000;
 
         public enum Param
         {
@@ -107,7 +17,7 @@ namespace tpl.LibraryContent
 
         public enum TokenTypes
         {
-            // k - keyword, s - string && integer param, UPPER - Func Branch, o - operator
+            // k - keyword, s - string && integer param, UPPER - Func Branch, o - operator, f - field
             PRINT, // print()
             lsq, // (
             rsq, // )
@@ -121,14 +31,17 @@ namespace tpl.LibraryContent
             constant, // define constant
             k_var, // var
             o_sign, // =
+            o_plus, // +
             k_const, // const
             k_func, // function
             k_stop, // stop program with exception
             s_space, // Space symbol define
+            f_int, // integer
         }
 
         public static void ReadTokens(List<string> Tokens, ref Stack<string> Stack, ref Dictionary<string, string> Variables, Param param)
         {
+            int line = 1;
             for (int pos = 0; pos < Tokens.Count; pos++)
             {
                 var token = Tokens[pos];
@@ -140,19 +53,55 @@ namespace tpl.LibraryContent
                 {
 
                     case "s_space":
+                        line++;
                         break;
 
                     case "o_sign":
-                        if (Variables.TryGetValue(Tokens[pos-1], out string left) && Variables.TryGetValue(Tokens[pos+1], out string right))
+                        if (Variables.TryGetValue(Tokens[pos-1], out string leftSign) && Variables.TryGetValue(Tokens[pos+1], out string rightSign))
                         {
-
+                            Variables[Tokens[pos - 1]] = Variables[Tokens[pos + 1]];
+                            break;
                         }
-                        ThrowError(ThrowErrors.OPERATORERR, 5);
+                        if (Variables.TryGetValue(Tokens[pos - 1], out string leftVarSign))
+                        {
+                            Variables[Tokens[pos - 1]] = Tokens[pos + 1];
+                            break;
+                        }
+                        ThrowError(ThrowErrors.OPERATORERR, line, Tokens[pos], 5);
+                        break;
+
+                    case "o_plus":
+                        if (Variables.TryGetValue(Tokens[pos - 1], out string leftPlus) && Variables.TryGetValue(Tokens[pos + 1], out string rightPlus))
+                        {
+                            Variables[Tokens[pos - 1]] += Variables[Tokens[pos + 1]];
+                            break;
+                        }
+                        if (Variables.TryGetValue(Tokens[pos - 1], out string leftVarPlus))
+                        {
+                            if (Tokens[pos + 1].StartsWith("N"))
+                            {
+                                if (int.TryParse(Tokens[pos+1], out int rightNumPlus) && (int.TryParse(Variables[Tokens[pos - 1]], out int leftNumPlus)))
+                                {
+                                    int value = rightNumPlus + leftNumPlus;
+                                    Variables[Tokens[pos - 1]] = value.ToString();
+                                }
+                                break;
+                            }
+                            Variables[Tokens[pos - 1]] += Tokens[pos + 1];
+                            break;
+                        }
+                        ThrowError(ThrowErrors.OPERATORERR, line, Tokens[pos], 4);
                         break;
 
                     case "k_var":
-                        Console.WriteLine(Tokens[pos+1]);
-                        Variables.Add(Tokens[pos+1], "null");
+                        try
+                        {
+                            Variables.Add(Tokens[pos + 1], "null");
+                        }
+                        catch (Exception)
+                        {
+                            ThrowError(ThrowErrors.VARCANBEDECLARED, line, Tokens[pos], 5);
+                        }
                         break;
 
                     case "PRINT":
@@ -170,15 +119,51 @@ namespace tpl.LibraryContent
                                     {
                                         break;
                                     }
+                                    if (Token == "s_symbol")
+                                    {
+                                        if (isText)
+                                        {
+                                            isText = false;
+                                            continue;
+                                        }
+                                        isText = true;
+                                        continue;
+                                    }
                                     if (!IsTokenKey(Token) && isFirstWord)
                                     {
-                                        isFirstWord = false;
-                                        ValueToWrite += $"{Token}";
+                                        if (isText)
+                                        {
+                                            isFirstWord = false;
+                                            ValueToWrite += $"{Token}";
+                                            continue;
+                                        }
+                                        try
+                                        {
+                                            ValueToWrite += $"{Variables[Token]}";
+                                        }
+                                        catch (Exception)
+                                        {
+                                            ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 3);
+                                        }
                                         continue;
                                     }
                                     if (!IsTokenKey(Token))
                                     {
-                                        ValueToWrite += $" {Token}";
+                                        if (isText)
+                                        {
+                                            isFirstWord = false;
+                                            ValueToWrite += $" {Token}";
+                                            continue;
+                                        }
+                                        try
+                                        {
+                                            ValueToWrite += $" {Variables[Token]}";
+                                        }
+                                        catch (Exception)
+                                        {
+                                            ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 10);
+                                        }
+                                        continue;
                                     }
                                     continue;
                                 }
@@ -217,6 +202,9 @@ namespace tpl.LibraryContent
                     case "=":
                         tokens.Add(TokenTypes.o_sign.ToString());
                         break;
+                    case "+":
+                        tokens.Add(TokenTypes.o_plus.ToString());
+                        break;
 
                     case "print":
                         tokens.Add(TokenTypes.PRINT.ToString());
@@ -241,8 +229,16 @@ namespace tpl.LibraryContent
                     case "exit":
                         break;
 
+                    case "int":
+                        break;
+
                     default:
-                        tokens.Add(codetocompare[pos]);
+                        if (codetocompare[pos-1] != "int")
+                        {
+                            tokens.Add(codetocompare[pos]);
+                            break;
+                        }
+                        tokens.Add($"N{codetocompare[pos]}");
                         break;
                 }
             }

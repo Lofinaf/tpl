@@ -12,7 +12,7 @@ namespace tpl.Interplitator
         #region RunAndDebug 
         public static bool RuninSafeMod(string Source)
         {
-            RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.def);
+            RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.debug);
             return true;
         }
         public static bool RuninSafeModWithDebug(string Source)

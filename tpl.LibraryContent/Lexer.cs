@@ -8,17 +8,15 @@ namespace tpl.LibraryContent
 {
     public class Lexer
     {
-        private const int _maxWords = 10000;
-
         #region ErrorThrowingParam
         private protected static string[] _aboutErrorsEN =
         {
             "Unknown Symbol",
             "Uncorrect file!",
             "\"(\" not found",
-            "You try to print integer, but you value this is string",
-            "String is specific",
+            "Variable not found",
             "Error operator using",
+            "This variable can be declared again",
         };
 
         public enum ThrowErrors : int
@@ -26,8 +24,9 @@ namespace tpl.LibraryContent
             UNKNOWNSYBMOL = 0,
             LSQNOTFOUND = 5,
             INTYPEISSTRING = 10,
-            SPECIFICSTR = 2,
+            SPECIFICSTR = 12,
             OPERATORERR = 2,
+            VARCANBEDECLARED = 2,
         }
 
         public static void ThrowError(ThrowErrors Error, int Line, string Word, int Id)
@@ -89,7 +88,7 @@ namespace tpl.LibraryContent
             string word = "";
             foreach (var item in text)
             {
-                if (char.IsWhiteSpace(item) || IsBracket(item.ToString()) || IsSemicolon(item.ToString()) || IsDot(item.ToString()))
+                if (char.IsWhiteSpace(item) || IsBracket(item.ToString()) || IsSemicolon(item.ToString()) || IsDot(item.ToString()) || IsSign(item.ToString()))
                 {
                     word += $" {item}";
                     ret += $" {word}";
