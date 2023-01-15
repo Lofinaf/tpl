@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-
-using tpl.Interplitator;
+using tpl.Interpreter;
 
 namespace tpl.Runtime
 {
@@ -21,7 +20,7 @@ namespace tpl.Runtime
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Branch arg not defined");
+                            Console.WriteLine("File not found");
                         }
                         break;
 
@@ -32,7 +31,7 @@ namespace tpl.Runtime
                         }
                         catch (Exception)
                         {
-                            Console.WriteLine("Branch arg not defined");
+                            Console.WriteLine("File not found");
                         }
                         break;
 

@@ -5,40 +5,8 @@ using static tpl.LibraryContent.Lexer;
 
 namespace tpl.LibraryContent
 {
-    public class Run
+    public partial class Run
     {
-        private const int _maxWords = 10000;
-
-        public enum Param
-        {
-            def,
-            debug,
-        }
-
-        public enum TokenTypes
-        {
-            // k - keyword, s - string && integer param, UPPER - Func Branch, o - operator, f - field
-            PRINT, // print()
-            lsq, // (
-            rsq, // )
-            s_symbol, // "
-            s_symbol2, // '
-            k_import, // import
-            s_symbolunk, // Unknown Symbol
-            EXIT, // exit()
-            function, // defined func
-            variable, // defined var
-            constant, // define constant
-            k_var, // var
-            o_sign, // =
-            o_plus, // +
-            k_const, // const
-            k_func, // function
-            k_stop, // stop program with exception
-            s_space, // Space symbol define
-            f_int, // integer
-        }
-
         public static void ReadTokens(List<string> Tokens, ref Stack<string> Stack, ref Dictionary<string, string> Variables, Param param)
         {
             int line = 1;
@@ -179,70 +147,6 @@ namespace tpl.LibraryContent
                         break;
                 }
             }
-        }
-
-        public static List<string> ToTokens(string Source)
-        {
-            List<string> tokens = new List<string>();
-
-            var codetocompare = Lex(Source).Split(new string[]{" "}, StringSplitOptions.RemoveEmptyEntries);
-            for (int pos = 0; pos < codetocompare.Length; pos++)
-            {
-                // Console.WriteLine(codetocompare[pos]);
-                switch (codetocompare[pos])
-                {
-                    case "\n":
-                        tokens.Add(TokenTypes.s_space.ToString());
-                        break;
-
-                    case "var":
-                        tokens.Add(TokenTypes.k_var.ToString());
-                        break;
-
-                    case "=":
-                        tokens.Add(TokenTypes.o_sign.ToString());
-                        break;
-                    case "+":
-                        tokens.Add(TokenTypes.o_plus.ToString());
-                        break;
-
-                    case "print":
-                        tokens.Add(TokenTypes.PRINT.ToString());
-                        break;
-
-                    case "(":
-                        tokens.Add(TokenTypes.lsq.ToString());
-                        break;
-
-                    case ")":
-                        tokens.Add(TokenTypes.rsq.ToString());
-                        break;
-
-                    case "\"":
-                        tokens.Add(TokenTypes.s_symbol.ToString());
-                        break;
-
-                    case "\'":
-                        tokens.Add(TokenTypes.s_symbol.ToString());
-                        break;
-
-                    case "exit":
-                        break;
-
-                    case "int":
-                        break;
-
-                    default:
-                        if (codetocompare[pos-1] != "int")
-                        {
-                            tokens.Add(codetocompare[pos]);
-                            break;
-                        }
-                        tokens.Add($"N{codetocompare[pos]}");
-                        break;
-                }
-            }
-            return tokens;
         }
     }
 }

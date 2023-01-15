@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using tpl.LibraryContent;
 
-namespace tpl.Interplitator
+namespace tpl.Interpreter
 {
     public class Compiler
     {

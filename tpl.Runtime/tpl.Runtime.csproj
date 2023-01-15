@@ -79,13 +79,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\tpl.Interpreter\tpl.Interpreter.csproj">
+      <Project>{502a3689-cb9f-45af-8337-e7ddb565a31f}</Project>
+      <Name>tpl.Interpreter</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tpl.LibraryContent\tpl.LibraryContent.csproj">
       <Project>{aa9eb5d1-a0a2-423f-b060-1dfc1881f873}</Project>
       <Name>tpl.LibraryContent</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Interplitator\tpl.Interplitator.csproj">
-      <Project>{502a3689-cb9f-45af-8337-e7ddb565a31f}</Project>
-      <Name>tpl.Interplitator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
