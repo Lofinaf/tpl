@@ -60,10 +60,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionsofTpl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Compiler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -81,9 +79,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lexer\Lexer.csproj">
+    <ProjectReference Include="..\tpl.LibraryContent\tpl.LibraryContent.csproj">
       <Project>{aa9eb5d1-a0a2-423f-b060-1dfc1881f873}</Project>
-      <Name>Lexer</Name>
+      <Name>tpl.LibraryContent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tpl.Interplitator\tpl.Interplitator.csproj">
+      <Project>{502a3689-cb9f-45af-8337-e7ddb565a31f}</Project>
+      <Name>tpl.Interplitator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

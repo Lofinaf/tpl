@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace tpl.LibraryContent
 {
-    public class Lexer
+    public class Run
     {
         private const int _maxWords = 10000; 
 
@@ -160,66 +160,32 @@ namespace tpl.LibraryContent
                         {
                             string ValueToWrite = "";
                             bool isFirstWord = true;
-                            bool WordIsText = false;
-                            for (int word = pos + 2; word <= _maxWords; word++)
+                            bool isText = false;
+                            for (int word = pos + 1; word <= _maxWords; word++)
                             {
-                                    if (Tokens[word] == "s_symbol")
+                                if (Tokens.Count > word)
+                                {
+                                    var Token = Tokens[word];
+                                    if (Token == "rsq")
                                     {
-                                        WordIsText = true;
-                                        for (int wix = word + 1; wix <= _maxWords; wix++)
-                                        {
-                                            if (Tokens.Count > wix && WordIsText)
-                                            {
-                                                if (Tokens[wix] == "s_symbol")
-                                                {
-                                                    WordIsText = false;
-                                                    continue;
-                                                }
-                                                if (!IsTokenKey(Tokens[wix]))
-                                                {
-                                                    if (isFirstWord)
-                                                    {
-                                                        ValueToWrite += $"{Tokens[wix]}";
-                                                        isFirstWord = false;
-                                                        continue;
-                                                    }
-                                                    ValueToWrite += $" {Tokens[wix]}";
-                                                    continue;
-                                                }
-                                                // Need fix
-                                                //if (Tokens[wix] == "rsq" && WordIsText)
-                                                //{
-                                                //    ThrowError(ThrowErrors.SPECIFICSTR, 0, Tokens[wix], 4);
-                                                //    break;
-                                                //}
-                                            }
-                                        }
-                                    }
-
-                                    if (int.TryParse(Tokens[word], out int i) && !WordIsText)
-                                    {
-                                        if (isFirstWord)
-                                        {
-                                            ValueToWrite += $"{Tokens[word]}";
-                                            isFirstWord = false;
-                                            continue;
-                                        }
-                                        ValueToWrite += $" {Tokens[word]}";
-                                        continue;
-                                    }
-                                    // Need to fix
-                                    //else if (!WordIsText)
-                                    //{
-                                    //    ThrowError(ThrowErrors.SPECIFICSTR, 3);
-                                    //}
-
-                                    if (Tokens[word] == "rsq")
-                                    {
-                                        Console.WriteLine(ValueToWrite);
                                         break;
                                     }
+                                    if (!IsTokenKey(Token) && isFirstWord)
+                                    {
+                                        isFirstWord = false;
+                                        ValueToWrite += $"{Token}";
+                                        continue;
+                                    }
+                                    if (!IsTokenKey(Token))
+                                    {
+                                        ValueToWrite += $" {Token}";
+                                    }
+                                    continue;
+                                }
                                 break;
                             }
+                            Console.WriteLine(ValueToWrite);
+                            break;
                         }
                         ThrowError(ThrowErrors.LSQNOTFOUND, 2);
                         return;
@@ -237,6 +203,7 @@ namespace tpl.LibraryContent
             var codetocompare = Lex(Source).Split(new string[]{" "}, StringSplitOptions.RemoveEmptyEntries);
             for (int pos = 0; pos < codetocompare.Length; pos++)
             {
+                // Console.WriteLine(codetocompare[pos]);
                 switch (codetocompare[pos])
                 {
                     case "\n":
