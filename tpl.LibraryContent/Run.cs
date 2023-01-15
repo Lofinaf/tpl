@@ -38,7 +38,7 @@ namespace tpl.LibraryContent
                             Variables[Tokens[pos - 1]] = Tokens[pos + 1];
                             break;
                         }
-                        ThrowError(ThrowErrors.OPERATORERR, line, Tokens[pos], 5);
+                        ThrowError(ref Result ,ThrowErrors.OPERATORERR, line, Tokens[pos], 5);
                         break;
 
                     case "o_plus":
@@ -61,7 +61,7 @@ namespace tpl.LibraryContent
                             Variables[Tokens[pos - 1]] += Tokens[pos + 1];
                             break;
                         }
-                        ThrowError(ThrowErrors.OPERATORERR, line, Tokens[pos], 4);
+                        ThrowError(ref Result, ThrowErrors.OPERATORERR, line, Tokens[pos], 4);
                         break;
 
                     case "k_var":
@@ -71,7 +71,7 @@ namespace tpl.LibraryContent
                         }
                         catch (System.Exception)
                         {
-                            ThrowError(ThrowErrors.VARCANBEDECLARED, line, Tokens[pos], 5);
+                            ThrowError(ref Result, ThrowErrors.VARCANBEDECLARED, line, Tokens[pos], 5);
                         }
                         break;
 
@@ -114,7 +114,7 @@ namespace tpl.LibraryContent
                                         }
                                         catch (System.Exception)
                                         {
-                                            ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 3);
+                                            ThrowError(ref Result, ThrowErrors.INTYPEISSTRING, line, Token, 3);
                                         }
                                         continue;
                                     }
@@ -132,7 +132,7 @@ namespace tpl.LibraryContent
                                         }
                                         catch (System.Exception)
                                         {
-                                            ThrowError(ThrowErrors.INTYPEISSTRING, line, Token, 10);
+                                            ThrowError(ref Result, ThrowErrors.INTYPEISSTRING, line, Token, 10);
                                         }
                                         continue;
                                     }
@@ -143,7 +143,7 @@ namespace tpl.LibraryContent
                             Console.WriteLine(ValueToWrite);
                             break;
                         }
-                        ThrowError(ThrowErrors.LSQNOTFOUND, 2);
+                        ThrowError(ref Result, ThrowErrors.LSQNOTFOUND, 2);
                         return Result;
 
                     default:

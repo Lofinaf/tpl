@@ -1,8 +1,9 @@
 ﻿using System;
+using tpl.Runtime.Results;
 
 namespace tpl.LibraryContent
 {
-    public class Exception
+    public sealed class Exception
     {
         #region ErrorThrowingParam
         private protected static string[] _aboutErrorsEN =
@@ -25,22 +26,31 @@ namespace tpl.LibraryContent
             VARCANBEDECLARED,
         }
 
-        public static void ThrowError(ThrowErrors Error, int Line, string Word, int Id)
+        public static void ThrowError(ref InterpreterResult Result, ThrowErrors Error, int Line, string Word, int Id)
         {
+            var Message = $"Unhandled Exception, id: {Error}, line: {Line}, char: {Word}; {_aboutErrorsEN[Id]}";
+            Result.ErrorsList.Add(Message);
+
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}, line: {Line}, char: {Word}; {_aboutErrorsEN[Id]}");
+            Console.WriteLine(Message);
             Console.ResetColor();
         }
-        public static void ThrowError(ThrowErrors Error, int Line, int Id)
+        public static void ThrowError(ref InterpreterResult Result, ThrowErrors Error, int Line, int Id)
         {
+            var Message = $"Unhandled Exception, id: {Error}, line: {Line}; {_aboutErrorsEN[Id]}";
+            Result.ErrorsList.Add(Message);
+
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}, line: {Line}; {_aboutErrorsEN[Id]}");
+            Console.WriteLine(Message);
             Console.ResetColor();
         }
-        public static void ThrowError(ThrowErrors Error, int Id)
+        public static void ThrowError(ref InterpreterResult Result, ThrowErrors Error, int Id)
         {
+            var Message = $"Unhandled Exception, id: {Error}; {_aboutErrorsEN[Id]}";
+            Result.ErrorsList.Add(Message);
+
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine($"Unhandled Exception, id: {Error}; {_aboutErrorsEN[Id]}");
+            Console.WriteLine(Message);
             Console.ResetColor();
         }
         #endregion

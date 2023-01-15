@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using tpl.LibraryContent;
+using tpl.Runtime.Results;
 
 namespace tpl.Interpreter
 {
@@ -10,15 +11,13 @@ namespace tpl.Interpreter
         public static Dictionary<string, string> Variables = new Dictionary<string, string>();
 
         #region RunAndDebug 
-        public static bool RuninSafeMod(string Source)
+        public static InterpreterResult RuninSafeMod(string Source)
         {
-            RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.debug);
-            return true;
+            return RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.def);
         }
-        public static bool RuninSafeModWithDebug(string Source)
+        public static InterpreterResult RuninSafeModWithDebug(string Source)
         {
-            RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.debug);
-            return true;
+            return RunTpl.ReadTokens(RunTpl.ToTokens(Source), ref Scope, ref Variables, RunTpl.Param.debug);
         }
         #endregion
     }

@@ -16,6 +16,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Interpreter", "tpl.Inte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Runtime.Results", "tpl.Runtime.Results\tpl.Runtime.Results.csproj", "{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Runtime.Results.Test", "tpl.Runtime.Results.Test\tpl.Runtime.Results.Test.csproj", "{3FB6346D-B9A1-43FE-938B-465036A690C3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FB6346D-B9A1-43FE-938B-465036A690C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB6346D-B9A1-43FE-938B-465036A690C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB6346D-B9A1-43FE-938B-465036A690C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB6346D-B9A1-43FE-938B-465036A690C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
