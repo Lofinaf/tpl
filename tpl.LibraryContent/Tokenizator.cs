@@ -7,6 +7,28 @@ namespace tpl.LibraryContent
 {
     public partial class Run
     {
+
+        public enum TokenTypes
+        {
+            // k - keyword, s - string && integer param, UPPER - Func Branch, o - operator, f - field
+            PRINT, // print()
+            lsq, // (
+            rsq, // )
+            s_symbol, // "
+            s_symbol2, // '
+            k_import, // import
+            k_var, // var
+            o_sign, // =
+            o_plus, // +
+            o_minus, // -
+            o_div, // /
+            o_sub, // *
+            k_const, // const
+            k_func, // function
+            k_stop, // stop program with exception
+            s_newline // Space symbol define
+        }
+
         public static List<string> ToTokens(string Source)
         {
             List<string> tokens = new List<string>();
@@ -17,10 +39,27 @@ namespace tpl.LibraryContent
                 // Console.WriteLine(codetocompare[pos]);
                 switch (codetocompare[pos])
                 {
-                    case "\n":
-                        tokens.Add(TokenTypes.s_space.ToString());
+
+                    case "cvar":
+                        tokens.Add(TokenTypes.k_const.ToString());
                         break;
 
+                    case "\n":
+                        tokens.Add(TokenTypes.s_newline.ToString());
+                        break;
+
+                    case "-":
+                        tokens.Add(TokenTypes.o_minus.ToString());
+                        break;
+
+                    case "*":
+                        tokens.Add(TokenTypes.o_sub.ToString());
+                        break;
+
+                    case "/":
+                        tokens.Add(TokenTypes.o_div.ToString());
+                        break;
+                    
                     case "var":
                         tokens.Add(TokenTypes.k_var.ToString());
                         break;
@@ -52,19 +91,8 @@ namespace tpl.LibraryContent
                         tokens.Add(TokenTypes.s_symbol.ToString());
                         break;
 
-                    case "exit":
-                        break;
-
-                    case "int":
-                        break;
-
                     default:
-                        if (codetocompare[pos - 1] != "int")
-                        {
-                            tokens.Add(codetocompare[pos]);
-                            break;
-                        }
-                        tokens.Add($"N{codetocompare[pos]}");
+                        tokens.Add(codetocompare[pos]);
                         break;
                 }
             }

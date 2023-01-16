@@ -3,11 +3,10 @@ using System.IO;
 
 // Tpl namespace`s
 using tpl.Interpreter;
-using tpl.Runtime.Results;
 
 namespace tpl.Runtime.Results.Test
 {
-    class Program
+    unsafe class Program
     {
         static void Main(string[] args)
         {
