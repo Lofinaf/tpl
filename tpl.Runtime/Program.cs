@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.IO;
-using tpl.Interpreter;
 
 namespace tpl.Runtime
 {
@@ -16,7 +15,7 @@ namespace tpl.Runtime
                     case "-run":
                         try
                         {
-                            Compiler.RuninSafeMod(File.ReadAllText(args[Argitem.index+1]));
+                            //Compiler.RuninSafeMod(File.ReadAllText(args[Argitem.index+1]));
                         }
                         catch (Exception)
                         {
@@ -27,7 +26,7 @@ namespace tpl.Runtime
                     case "-debug":
                         try
                         {
-                            Compiler.RuninSafeMod(File.ReadAllText(args[Argitem.index+1]));
+                            //Compiler.RuninSafeMod(File.ReadAllText(args[Argitem.index+1]));
                         }
                         catch (Exception)
                         {
@@ -39,7 +38,7 @@ namespace tpl.Runtime
                         break;
                 }
             }
-            Compiler.RuninSafeMod(System.IO.File.ReadAllText("test.tpl"));
+            //Compiler.RuninSafeMod(System.IO.File.ReadAllText("test.tpl"));
             Console.ReadKey(true);
         }
     }

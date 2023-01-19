@@ -1,15 +1,13 @@
 ﻿using System;
-using tpl.Runtime.Results;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace tpl.LibraryContent
+namespace tpl.Runtime.Interpreter
 {
-    public sealed class Exception
+    public class DivideToWord
     {
-        public static bool IsNumber(string text)
-        {
-            return int.TryParse(text, out int i);
-        }
-
         public static string Lex(string text)
         {
             string ret = "";
@@ -27,6 +25,23 @@ namespace tpl.LibraryContent
                 continue;
             }
             return ret;
+        }
+
+        public static bool IsSign(string text)
+        {
+            return (text == "=");
+        }
+        public static bool IsDot(string text)
+        {
+            return (text == ".");
+        }
+        public static bool IsSemicolon(string text)
+        {
+            return (text == ";");
+        }
+        public static bool IsBracket(string text)
+        {
+            return text == "(" || text == ")" || text == "\"" || text == "{" || text == "}";
         }
     }
 }

@@ -52,14 +52,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\tpl.Interpreter\tpl.Interpreter.csproj">
-      <Project>{502a3689-cb9f-45af-8337-e7ddb565a31f}</Project>
-      <Name>tpl.Interpreter</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.LibraryContent\tpl.LibraryContent.csproj">
-      <Project>{aa9eb5d1-a0a2-423f-b060-1dfc1881f873}</Project>
-      <Name>tpl.LibraryContent</Name>
-    </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
       <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>
       <Name>tpl.Runtime.Results</Name>

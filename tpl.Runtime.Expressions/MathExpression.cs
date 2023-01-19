@@ -33,9 +33,10 @@ namespace tpl.Runtime.Expressions
                 if (int.TryParse(Token, out int Value))
                 {
                     Output.Enqueue(Value.ToString());
+                    continue;
                 }
 
-                if (Token is "o_plus")
+                if (_operatorsAndPrecedence.ContainsKey(Token))
                 {
 
                 }

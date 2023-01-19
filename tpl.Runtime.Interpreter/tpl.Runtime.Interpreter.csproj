@@ -4,32 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{36579F41-7EE2-49B7-AF2E-B9DA67F9E1E7}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>tpl</RootNamespace>
-    <AssemblyName>tpl</AssemblyName>
+    <ProjectGuid>{94E63192-D009-4930-9AE6-06156FFD4182}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>tpl.Runtime.Interpreter</RootNamespace>
+    <AssemblyName>tpl.Runtime.Interpreter</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -37,17 +21,14 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -60,23 +41,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="DivideToWord.cs" />
+    <Compile Include="IScript.cs" />
+    <Compile Include="Loader\LoaderErrors.cs" />
+    <Compile Include="Loader\ScriptLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
+    <Compile Include="Script.cs" />
+    <Compile Include="ScriptOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tpl.Core.Dynamic\tpl.Core.Dynamic.csproj">
@@ -90,14 +61,6 @@
     <ProjectReference Include="..\tpl.Core\tpl.Core.csproj">
       <Project>{b88b4103-99fd-4626-95db-7856aa24fc65}</Project>
       <Name>tpl.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Expressions\tpl.Runtime.Expressions.csproj">
-      <Project>{1e3a7d70-5d1d-4ee4-93c4-1d9dbcf0235b}</Project>
-      <Name>tpl.Runtime.Expressions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Interpreter\tpl.Runtime.Interpreter.csproj">
-      <Project>{94e63192-d009-4930-9ae6-06156ffd4182}</Project>
-      <Name>tpl.Runtime.Interpreter</Name>
     </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
       <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>
