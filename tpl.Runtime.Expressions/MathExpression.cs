@@ -15,11 +15,11 @@ namespace tpl.Runtime.Expressions
 
         private Dictionary<string, int> _operatorsAndPrecedence = new Dictionary<string, int>()
         {
-            {"o_sign", 3},
-            {"o_div", 2},
-            {"o_sub", 1},
-            {"o_minus", 0},
-            {"o_plus", -1},
+            {"o_sign", 4},
+            {"o_div", 3},
+            {"o_sub", 2},
+            {"o_minus", 1},
+            {"o_plus", 0},
         };
 
         public override int HowMany()
@@ -35,8 +35,6 @@ namespace tpl.Runtime.Expressions
                     Output.Enqueue(Value.ToString());
                 }
 
-
-                // Need to fix
                 if (Token is "o_plus")
                 {
 
