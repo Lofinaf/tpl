@@ -60,7 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Thread.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +90,10 @@
     <ProjectReference Include="..\tpl.Core\tpl.Core.csproj">
       <Project>{b88b4103-99fd-4626-95db-7856aa24fc65}</Project>
       <Name>tpl.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\tpl.Engine\tpl.Engine.csproj">
+      <Project>{ae5812a1-0b17-43b7-8794-5a5cef5adbe1}</Project>
+      <Name>tpl.Engine</Name>
     </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Expressions\tpl.Runtime.Expressions.csproj">
       <Project>{1e3a7d70-5d1d-4ee4-93c4-1d9dbcf0235b}</Project>

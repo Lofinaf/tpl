@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using tpl.Core;
 using tpl.Core.Variables;
 using tpl.Core.Dynamic;
 using tpl.Runtime.Results;
+
+using static tpl.Runtime.Interpreter.Parser;
 
 namespace tpl.Runtime.Interpreter.Loader
 {
@@ -18,7 +21,7 @@ namespace tpl.Runtime.Interpreter.Loader
         {
             if (File.Exists(path))
             {
-                Module.Add(new Script("1.0.0.0", File.ReadAllText(path), new ScriptOptions(false, false)));
+                Module.Add(new Script("1.0.0.0", path, new ScriptOptions(false, false)));
                 return true;
             }
             return false;
@@ -34,27 +37,22 @@ namespace tpl.Runtime.Interpreter.Loader
                 {
                     foreach (var Line in File.ReadLines(Script.Path))
                     {
-                        var LineDivideWord = Parser.Lex(Line).Split();
-
-                        foreach (var Word in LineDivideWord)
+                        var LineDivideWord = Divide(Line).Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+                        foreach (var item in LineDivideWord)
                         {
-                            if (Word is "var")
+                            Console.WriteLine(item);
+                        }
+                        foreach (var Word in LineDivideWord.Select((v, i) => (v, i)))
+                        {
+                            if (IsPrint(Word.v))
                             {
-                                try
-                                {
-
-                                }
-                                catch (System.Exception)
-                                {
-
-                                    throw;
-                                }
+                                //Console.WriteLine(LineDivideWord[Word.i]);
                             }
                         }
                     }
                     continue;
                 }
-                // Throw Error
+                Result.ErrorsList.Add(new LoaderErrors().IdAbouts["TPL1"]);
             }
             return Result;
         }

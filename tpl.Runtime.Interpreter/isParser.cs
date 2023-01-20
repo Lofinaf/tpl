@@ -46,7 +46,7 @@ namespace tpl.Runtime.Interpreter
         {
             if (IsSign(text) || IsDot(text) || IsSemicolon(text) || IsOpenScope(text) || IsCloseScope(text) || IsOpenBracket(text) || IsCloseBracket(text))
             {
-
+                return true;
             }
             return false;
         }

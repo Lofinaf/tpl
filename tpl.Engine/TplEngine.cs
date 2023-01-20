@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using tpl.Runtime.Interpreter.Loader;
+using tpl.Runtime.Results;
 
 namespace tpl.Engine
 {
@@ -12,6 +13,8 @@ namespace tpl.Engine
         public ScriptLoader ScriptLoader { get; private set; }
         public LoaderErrors LoaderErrors { get; private set; }
 
+        public Stack<string> EngineStack { get; private set; }
+
         public TplEngine(ScriptLoader scriptLoader, LoaderErrors loaderErrors)
         {
             ScriptLoader = scriptLoader;
@@ -19,7 +22,7 @@ namespace tpl.Engine
         }
 
         public void RegistryScript(string path) => ScriptLoader.LoadScript(path);
-        public void RunAllScripts() => ScriptLoader.RunAllScriptsInModule();
+        public InterpreterResult RunAllScripts() => ScriptLoader.RunAllScriptsInModule();
 
         ~TplEngine()
         {
