@@ -8,7 +8,7 @@ using tpl.Runtime.Results;
 
 namespace tpl.Runtime.Interpreter.Loader
 {
-    class ScriptLoader
+    public class ScriptLoader
     {
         public List<Script> Module = new List<Script>();
 
@@ -34,7 +34,7 @@ namespace tpl.Runtime.Interpreter.Loader
                 {
                     foreach (var Line in File.ReadLines(Script.Path))
                     {
-                        var LineDivideWord = DivideToWord.Lex(Line).Split();
+                        var LineDivideWord = Parser.Lex(Line).Split();
 
                         foreach (var Word in LineDivideWord)
                         {
