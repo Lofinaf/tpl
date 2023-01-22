@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using tpl.Runtime.Interpreter.Loader;
 using tpl.Runtime.Results;
+using tpl.Core;
 
 namespace tpl.Engine
 {
@@ -12,6 +13,8 @@ namespace tpl.Engine
     {
         public ScriptLoader ScriptLoader { get; private set; }
         public LoaderErrors LoaderErrors { get; private set; }
+
+        public DefaultImportTokens @default;
 
         public Stack<string> EngineStack { get; private set; }
 

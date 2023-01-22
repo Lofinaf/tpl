@@ -7,7 +7,7 @@ using tpl.Runtime.Interpreter.Loader;
 
 namespace tpl.Runtime
 {
-    class Thread
+    class MainClass
     {
         protected static TplEngine Engine = new TplEngine(new ScriptLoader(), new LoaderErrors());
 

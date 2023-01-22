@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace tpl.Runtime.Expressions
 {
-    class PrintExpression
+    public class PrintExpression
     {
-        protected string Value { get; set; }
+        protected string Value { get; private set; }
+
+        public void AddValue(string value) => Value += value;
+        public void Output()
+        {
+            Console.WriteLine(Value);
+        }
     }
 }
