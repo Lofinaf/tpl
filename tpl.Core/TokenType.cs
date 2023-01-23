@@ -7,15 +7,21 @@ using System.Threading.Tasks;
 
 namespace tpl.Core
 {
-    public class TokenType
-    {
-        public string TokenName { get; private set; }
-        public Regex HowToFound { get; private set; }
+    public enum TokenType
+	{
+        // Keywords
+        AND, OR,
+        TRUE, FALSE,
 
-        public TokenType(string tokenName, Regex howToFound)
-        {
-            TokenName = tokenName ?? throw new ArgumentNullException(nameof(tokenName));
-            HowToFound = howToFound ?? throw new ArgumentNullException(nameof(howToFound));
-        }
-    }
+        // Single
+        MINUS, PLUS, DIV, MUL, DOT,
+        SLASH, LPAR, RPAR,
+        SCOPE_OPEN, SCOPE_CLOSE, SIGN,
+
+        // Single + Single = Mix
+        PLUS_SIGN, MINUS_SIGN,
+
+        // Literals
+        STRING, NUMBER, IDN,
+	}
 }

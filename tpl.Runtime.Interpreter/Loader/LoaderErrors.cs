@@ -7,7 +7,8 @@ namespace tpl.Runtime.Interpreter.Loader
     {
         public Dictionary<string, string> IdAbouts = new Dictionary<string, string>()
         {
-            {"TPL1", "File not found"}
+            {"TPL1", "File not found"},
+            {"TPL2", "Unknown symbol"},
         };
 
         public void Throw(string text, ConsoleColor consoleColor)

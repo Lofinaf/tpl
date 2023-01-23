@@ -43,9 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="isParser.cs" />
-    <Compile Include="Parser.cs" />
     <Compile Include="IScript.cs" />
+    <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Loader\LoaderErrors.cs" />
     <Compile Include="Loader\ScriptLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -54,23 +53,15 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tpl.Core.Dynamic\tpl.Core.Dynamic.csproj">
-      <Project>{e0617101-cb00-469d-9876-03deb5dda81f}</Project>
+      <Project>{E0617101-CB00-469D-9876-03DEB5DDA81F}</Project>
       <Name>tpl.Core.Dynamic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Core.Variables\tpl.Core.Variables.csproj">
-      <Project>{ebc2add2-a804-4bbd-a626-f02143a9bf65}</Project>
-      <Name>tpl.Core.Variables</Name>
     </ProjectReference>
     <ProjectReference Include="..\tpl.Core\tpl.Core.csproj">
       <Project>{b88b4103-99fd-4626-95db-7856aa24fc65}</Project>
       <Name>tpl.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Expressions\tpl.Runtime.Expressions.csproj">
-      <Project>{1e3a7d70-5d1d-4ee4-93c4-1d9dbcf0235b}</Project>
-      <Name>tpl.Runtime.Expressions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
-      <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>
+      <Project>{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}</Project>
       <Name>tpl.Runtime.Results</Name>
     </ProjectReference>
   </ItemGroup>

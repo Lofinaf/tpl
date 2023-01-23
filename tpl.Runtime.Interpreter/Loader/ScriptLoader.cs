@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using tpl.Core;
-using tpl.Core.Variables;
 using tpl.Core.Dynamic;
 using tpl.Runtime.Results;
-using tpl.Runtime.Expressions;
-
-using static tpl.Runtime.Interpreter.Parser;
 
 namespace tpl.Runtime.Interpreter.Loader
 {
