@@ -15,13 +15,14 @@ namespace tpl.Core
 
         // Single
         MINUS, PLUS, DIV, MUL, DOT,
-        SLASH, LPAR, RPAR,
-        SCOPE_OPEN, SCOPE_CLOSE, SIGN,
+        SLASH, LPAR, RPAR, BANG, LESS, GREATER,
+        SCOPE_OPEN, SCOPE_CLOSE, EQUAL, COMMA,
 
-        // Single + Single = Mix
-        PLUS_SIGN, MINUS_SIGN,
+        // Token 1 + Token 2 = Token 1 + 2
+        BANG_EQUAL, EQUAL_EQUAL,
+        LESS_EQUAL, GREATER_EQUAL,
 
         // Literals
-        STRING, NUMBER, IDN,
+        STRING, NUMBER, IDN
 	}
 }

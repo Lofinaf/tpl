@@ -14,8 +14,6 @@ namespace tpl.Engine
         public ScriptLoader ScriptLoader { get; private set; }
         public LoaderErrors LoaderErrors { get; private set; }
 
-        public DefaultImportTokens @default;
-
         public Stack<string> EngineStack { get; private set; }
 
         public TplEngine(ScriptLoader scriptLoader, LoaderErrors loaderErrors)

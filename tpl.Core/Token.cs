@@ -9,12 +9,6 @@ namespace tpl.Core
 
         public int Position { get; private set; }
 
-        public Token(TokenType type, int position)
-        {
-            Type = type;
-            Position = position;
-        }
-
         public Token(TokenType type, string value, int position)
         {
             Type = type;

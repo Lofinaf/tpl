@@ -7,7 +7,7 @@
 
         public ScriptOptions ScriptOptions { get; set; }
 
-        public Script(string version, string path, ScriptOptions scriptOptions)
+        public Script(string version, string path)
         {
             Version = version;
             Path = path;
