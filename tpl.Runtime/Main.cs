@@ -20,14 +20,8 @@ namespace tpl.Runtime
                 {
                     // Engine.RegistryScript(args[Argitem.index + 1]);
                 }
-                var Lexer = new Lexer(File.ReadAllText("test.tpl"), Engine.LoaderErrors);
-
-                foreach (var item in Lexer.ScanSource())
-                {
-                    Console.WriteLine(item);
-                }
             }
-            // Engine.RegistryScript("test.tpl");
+            Engine.RunScript("test.tpl");
             Console.ReadKey(true);
         }
     }

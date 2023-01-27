@@ -10,8 +10,8 @@ namespace tpl.Core
     public enum TokenType
 	{
         // Keywords
-        AND, OR,
         TRUE, FALSE,
+        PRINT, VAR,
 
         // Single
         MINUS, PLUS, DIV, MUL, DOT,
@@ -23,6 +23,8 @@ namespace tpl.Core
         LESS_EQUAL, GREATER_EQUAL,
 
         // Literals
-        STRING, NUMBER, IDN
+        STRING, NUMBER, IDN,
+
+        END
 	}
 }

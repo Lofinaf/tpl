@@ -7,13 +7,15 @@ namespace tpl.Core
         public TokenType Type { get; private set; }
         public string Value { get; private set; }
 
-        public int Position { get; private set; }
+        public int Line { get; private set; }
+        public object Lit { get; private set; }
 
-        public Token(TokenType type, string value, int position)
+        public Token(TokenType type, string value, int position, object lit)
         {
             Type = type;
             Value = value;
-            Position = position;
+            Line = position;
+            Lit = lit;
         }
     }
 }

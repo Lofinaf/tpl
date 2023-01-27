@@ -21,9 +21,9 @@ namespace tpl.Runtime.Interpreter.Loader
 
         public void Throw(string text, ConsoleColor consoleColor)
         {
-            Console.BackgroundColor = consoleColor;
+            Console.ForegroundColor = consoleColor;
             Console.WriteLine(text);
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Black;
         }
     }
 }
