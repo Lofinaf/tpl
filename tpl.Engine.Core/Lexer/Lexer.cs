@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using tpl.Runtime.Interpreter.Loader;
+using tpl.Engine.Core.Loader;
+using tpl.Runtime.Results;
 using tpl.Core;
 
-namespace tpl.Runtime.Interpreter.Analysis
+namespace tpl.Engine.Core.Analysis
 {
     public class Lexer
     {
@@ -11,9 +12,7 @@ namespace tpl.Runtime.Interpreter.Analysis
 
         public List<Token> ReturnTokens = new List<Token>(); // not property!
 
-        public LoaderErrors loaderErrors = new LoaderErrors(new Results.InterpreterResult());
-
-        private bool _haveError = false;
+        public LoaderErrors loaderErrors = new LoaderErrors(new InterpreterResult());
 
         private static readonly Dictionary<string, TokenType> _keywords = new Dictionary<string, TokenType>
         {

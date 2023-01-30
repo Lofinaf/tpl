@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Core.Dynamic", "tpl.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Core", "tpl.Core\tpl.Core.csproj", "{B88B4103-99FD-4626-95DB-7856AA24FC65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Runtime.Interpreter", "tpl.Runtime.Interpreter\tpl.Runtime.Interpreter.csproj", "{94E63192-D009-4930-9AE6-06156FFD4182}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Engine.Core", "tpl.Engine.Core\tpl.Engine.Core.csproj", "{94E63192-D009-4930-9AE6-06156FFD4182}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Engine", "tpl.Engine\tpl.Engine.csproj", "{AE5812A1-0B17-43B7-8794-5A5CEF5ADBE1}"
 EndProject

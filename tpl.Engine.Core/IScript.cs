@@ -1,4 +1,4 @@
-﻿namespace tpl.Runtime.Interpreter
+﻿namespace tpl.Engine.Core
 {
     internal interface IScript
     {

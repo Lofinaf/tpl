@@ -91,6 +91,10 @@
       <Project>{b88b4103-99fd-4626-95db-7856aa24fc65}</Project>
       <Name>tpl.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\tpl.Engine.Core\tpl.Engine.Core.csproj">
+      <Project>{94e63192-d009-4930-9ae6-06156ffd4182}</Project>
+      <Name>tpl.Engine.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\tpl.Engine\tpl.Engine.csproj">
       <Project>{ae5812a1-0b17-43b7-8794-5a5cef5adbe1}</Project>
       <Name>tpl.Engine</Name>
@@ -98,10 +102,6 @@
     <ProjectReference Include="..\tpl.Runtime.Expressions\tpl.Runtime.Expressions.csproj">
       <Project>{1e3a7d70-5d1d-4ee4-93c4-1d9dbcf0235b}</Project>
       <Name>tpl.Runtime.Expressions</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Interpreter\tpl.Runtime.Interpreter.csproj">
-      <Project>{94e63192-d009-4930-9ae6-06156ffd4182}</Project>
-      <Name>tpl.Runtime.Interpreter</Name>
     </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
       <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>

@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
-using System.Text;
-using System.Threading.Tasks;
-using tpl.Runtime.Interpreter.Loader;
-using tpl.Runtime.Results;
-using tpl.Runtime.Interpreter.Analysis;
-using tpl.Core;
-using tpl.Runtime.Interpreter;
+using tpl.Engine.Core.Loader;
+using tpl.Engine.Core.Analysis;
 
 namespace tpl.Engine
 {
@@ -21,16 +14,16 @@ namespace tpl.Engine
         {
             ScriptLoader = scriptLoader;
             LoaderErrors = loaderErrors;
+            ScriptLoader.Init();
         }
 
-        public void RegistryScript(string path) => ScriptLoader.LoadScript(path);
-        public InterpreterResult RunAllScripts() => ScriptLoader.RunAllScriptsInModule();
+        public void RegistryScript(string path) => ScriptLoader.Module.Add(new Core.Script("1.0.0.0", path));
 
         public bool RunScript(string script)
         {
             if (!File.Exists(script))
             {
-                LoaderErrors.Throw($"File dont found in the path {script}", ConsoleColor.Red);
+                LoaderErrors.Throw($"File don`t found in the path {script}", ConsoleColor.Red);
                 return false;
             }
             _engineFrontendAnalysis(File.ReadAllText(script));

@@ -3,8 +3,9 @@ using System.Linq;
 using System.IO;
 using tpl.Runtime.Results;
 using tpl.Engine;
-using tpl.Runtime.Interpreter.Loader;
-using tpl.Runtime.Interpreter.Analysis;
+using tpl.Engine.Core;
+using tpl.Engine.Core.Analysis;
+using tpl.Engine.Core.Loader;
 
 namespace tpl.Runtime
 {
@@ -18,7 +19,7 @@ namespace tpl.Runtime
             {
                 if (Argitem.value is "-file")
                 {
-                    // Engine.RegistryScript(args[Argitem.index + 1]);
+                    Engine.RegistryScript(args[Argitem.index + 1]);
                 }
             }
             Engine.RunScript("test.tpl");

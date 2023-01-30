@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using tpl.Runtime.Results;
 
-namespace tpl.Runtime.Interpreter.Loader
+namespace tpl.Engine.Core.Loader
 {
     public class LoaderErrors
     {
