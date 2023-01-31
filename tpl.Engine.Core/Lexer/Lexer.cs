@@ -14,6 +14,7 @@ namespace tpl.Engine.Core.Analysis
 
         public LoaderErrors loaderErrors = new LoaderErrors(new InterpreterResult());
 
+        private static readonly Dictionary<string, string> _sr = new Dictionary<string, string>();
         private static readonly Dictionary<string, TokenType> _keywords = new Dictionary<string, TokenType>
         {
             {"print", TokenType.PRINT},
@@ -38,9 +39,9 @@ namespace tpl.Engine.Core.Analysis
             switch (t)
             {
                 case '/':
-                    if (_find('/'))
+                    if (_charExist('/'))
                     {
-                        while (_currentWord() != '\n' && !_isEnd())
+                        while (_currentChar() != '\n' && !_isEnd())
                         {
                             _skip();
                         }
@@ -62,10 +63,14 @@ namespace tpl.Engine.Core.Analysis
                 case '+': _tokenCreater(TokenType.PLUS); break;
                 case '*': _tokenCreater(TokenType.MUL); break;
 
-                case '!': _tokenCreater(_find('=') ? TokenType.BANG_EQUAL : TokenType.BANG); break;
-                case '=': _tokenCreater(_find('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL); break;
-                case '<': _tokenCreater(_find('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
-                case '>': _tokenCreater(_find('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
+                case '!': _tokenCreater(_charExist('=') ? TokenType.BANG_EQUAL : TokenType.BANG); break;
+                case '=': _tokenCreater(_charExist('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL); break;
+                case '<': _tokenCreater(_charExist('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
+                case '>': _tokenCreater(_charExist('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
+
+
+                // Spec
+                case '_': if (_charExist('_')) _parseSpec(); break;
 
                 case '\n':
                     _line++;
@@ -92,7 +97,7 @@ namespace tpl.Engine.Core.Analysis
                         _indParse();
                         break;
                     }
-                    loaderErrors.Throw($"Unknown char in line {_line}, position {_position}", ConsoleColor.Red);
+                    loaderErrors.Throw($"Unknown char {_currentChar()}; in line {_line}, char position {_position} --> \"word\" ", ConsoleColor.Red);
                     break;
             }
         }
@@ -104,20 +109,28 @@ namespace tpl.Engine.Core.Analysis
                 _startof = _position;
                 ToToken();
             }
-            ReturnTokens.Add(new Token(TokenType.END, "nil", _line, null));
+            ReturnTokens.Add(new Token(TokenType.END, "null", _line, null));
             return ReturnTokens;
         }
 
         #region Tools
 
+        private void _parseSpec()
+        {
+            while (_isText(_currentChar()))
+            {
+
+            }
+        }
+
         private void _indParse()
         {
-            while (_isNum(_currentWord()))
+            while (_isNum(_currentChar()))
             {
                 _skip();
             }
-            var Value = Source.Substring(_startof, _position - _startof);
 
+            var Value = Source.Substring(_startof, _position - _startof);
             if (!_keywords.TryGetValue(Value, out TokenType token))
             {
                 token = TokenType.IDN;
@@ -136,8 +149,8 @@ namespace tpl.Engine.Core.Analysis
         private bool _isEnd() => (_position >= Source.Length);
         private char _skip() => (Source[_position++]);
 
-        private char _currentWord() => (_isEnd() ? '\0' : Source[_position]);
-        private char _nextWord()
+        private char _currentChar() => (_isEnd() ? '\0' : Source[_position]);
+        private char _nextChar()
         {
             if (_position+1 >= Source.Length)
             {
@@ -155,16 +168,16 @@ namespace tpl.Engine.Core.Analysis
 
         private void _parseNumber()
         {
-            while (_isInteger(_currentWord()))
+            while (_isInteger(_currentChar()))
             {
                 _skip();
             }
 
-            if (_currentWord() != '.' && _isInteger(_nextWord()))
+            if (_currentChar() != '.' && _isInteger(_nextChar()))
             {
                 _skip();
 
-                while (_isInteger(_currentWord()))
+                while (_isInteger(_currentChar()))
                 {
                     _skip();
                 }
@@ -175,9 +188,9 @@ namespace tpl.Engine.Core.Analysis
 
         private void _parseString()
         {            
-            while (_currentWord() != '"' && !_isEnd())
+            while (_currentChar() != '"' && !_isEnd())
             {
-                if (_currentWord() == '\n')
+                if (_currentChar() == '\n')
                 {
                     _line++;
                 }
@@ -196,7 +209,7 @@ namespace tpl.Engine.Core.Analysis
 
         private bool _isInteger(char character) => (character >= '0' && character <= '9');
 
-        private bool _find(char character)
+        private bool _charExist(char character)
         {
             if (_isEnd()) return false;
             if (Source[_position] != character) return false;
