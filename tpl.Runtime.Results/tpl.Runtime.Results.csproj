@@ -45,5 +45,11 @@
     <Compile Include="InterpreterResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tpl.Core\tpl.Core.csproj">
+      <Project>{B88B4103-99FD-4626-95DB-7856AA24FC65}</Project>
+      <Name>tpl.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

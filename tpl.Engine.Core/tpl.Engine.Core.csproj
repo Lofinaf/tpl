@@ -47,6 +47,11 @@
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Loader\LoaderErrors.cs" />
     <Compile Include="Loader\ScriptLoader.cs" />
+    <Compile Include="Parser\Expressions\PrintExpression.cs" />
+    <Compile Include="Parser\INode.cs" />
+    <Compile Include="Parser\Expressions\IExpression.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\Statements\IStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Script.cs" />
   </ItemGroup>
@@ -64,5 +69,6 @@
       <Name>tpl.Runtime.Results</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

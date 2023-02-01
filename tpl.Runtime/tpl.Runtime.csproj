@@ -99,10 +99,6 @@
       <Project>{ae5812a1-0b17-43b7-8794-5a5cef5adbe1}</Project>
       <Name>tpl.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Expressions\tpl.Runtime.Expressions.csproj">
-      <Project>{1e3a7d70-5d1d-4ee4-93c4-1d9dbcf0235b}</Project>
-      <Name>tpl.Runtime.Expressions</Name>
-    </ProjectReference>
     <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
       <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>
       <Name>tpl.Runtime.Results</Name>

@@ -18,9 +18,20 @@ namespace tpl.Engine.Core.Analysis
         private static readonly Dictionary<string, TokenType> _keywords = new Dictionary<string, TokenType>
         {
             {"print", TokenType.PRINT},
+            {"const", TokenType.CONST},
             {"var", TokenType.VAR},
+            {"cvar", TokenType.CVAR},
             {"true", TokenType.TRUE},
             {"false", TokenType.FALSE},
+            {"func", TokenType.FUNC},
+            {"return", TokenType.RET},
+            {"import", TokenType.IMPORT},
+            {"module", TokenType.MODULE},
+            {"from", TokenType.FROM},
+            {"the", TokenType.THE},
+            {"if", TokenType.IF},
+            {"else", TokenType.ELSE},
+            {"scope", TokenType.SCOPE},
         };
 
         private int _startof = 0;
@@ -67,8 +78,8 @@ namespace tpl.Engine.Core.Analysis
                 case '=': _tokenCreater(_charExist('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL); break;
                 case '<': _tokenCreater(_charExist('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
                 case '>': _tokenCreater(_charExist('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
-
-
+                case ':': _tokenCreater(_charExist(':') ? TokenType.DT_DT : TokenType.DT); break;
+                
                 // Spec
                 case '_': if (_charExist('_')) _parseSpec(); break;
 
@@ -76,6 +87,7 @@ namespace tpl.Engine.Core.Analysis
                     _line++;
                     break;
 
+                case ';':
                 case '\r':
                 case '\t':
                 case ' ':

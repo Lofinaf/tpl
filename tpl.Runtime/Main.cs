@@ -11,7 +11,7 @@ namespace tpl.Runtime
 {
     class MainClass
     {
-        protected static TplEngine Engine = new TplEngine(new ScriptLoader(), new LoaderErrors(new InterpreterResult()));
+        protected static TplEngine Engine = new TplEngine(new Lexer(""), new ScriptLoader());
 
         public static void Main(string[] args)
         {
@@ -22,7 +22,7 @@ namespace tpl.Runtime
                     Engine.RegistryScript(args[Argitem.index + 1]);
                 }
             }
-            Engine.RunScript("test.tpl");
+            Engine.RunScript("test.tpl", ScriptRunOptions.DEBUG_LEXICAL_ANALYSIS);
             Console.ReadKey(true);
         }
     }

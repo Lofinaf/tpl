@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IEngine.cs" />
+    <Compile Include="ScriptRunOptions.cs" />
     <Compile Include="TplEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
