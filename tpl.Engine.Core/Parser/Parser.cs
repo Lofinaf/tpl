@@ -49,7 +49,6 @@ namespace tpl.Engine.Core.Parser
         #region Tools
         private bool _isEnd() => (_position >= Tokens.Count);
         private Token _skip() => (Tokens[_position++]);
-
         #endregion
     }
 }

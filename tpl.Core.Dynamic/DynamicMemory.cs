@@ -10,7 +10,7 @@ namespace tpl.Core.Dynamic
     {
         public Dictionary<string, Variable> Variables;
 
-        public void NewVarible(string name, string value, bool vstatic)
+        public void NewVariable(string name, string value, bool vstatic)
         {
             if (!Variables.ContainsKey(name))
             {
@@ -20,7 +20,7 @@ namespace tpl.Core.Dynamic
             throw new Exception("Такая переменая имеется");
         }
 
-        public Types GetVaribleType(string name)
+        public Types GetVariableType(string name)
         {
             if (!Variables.ContainsKey(name))
             {
@@ -29,7 +29,7 @@ namespace tpl.Core.Dynamic
             return Variables[name].Type;
         }
 
-        public void SetVarible(string name, string value)
+        public void SetVariable(string name, string value)
         {
             if (!Variables.ContainsKey(name))
             {

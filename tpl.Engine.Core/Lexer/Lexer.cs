@@ -14,13 +14,11 @@ namespace tpl.Engine.Core.Analysis
 
         public LoaderErrors loaderErrors = new LoaderErrors(new InterpreterResult());
 
-        private static readonly Dictionary<string, string> _sr = new Dictionary<string, string>();
         private static readonly Dictionary<string, TokenType> _keywords = new Dictionary<string, TokenType>
         {
             {"print", TokenType.PRINT},
             {"const", TokenType.CONST},
             {"var", TokenType.VAR},
-            {"cvar", TokenType.CVAR},
             {"true", TokenType.TRUE},
             {"false", TokenType.FALSE},
             {"func", TokenType.FUNC},
@@ -28,7 +26,8 @@ namespace tpl.Engine.Core.Analysis
             {"import", TokenType.IMPORT},
             {"module", TokenType.MODULE},
             {"from", TokenType.FROM},
-            {"the", TokenType.THE},
+            {"package", TokenType.PACKAGETOLOAD},
+            {"_package", TokenType._PACKAGE},
             {"if", TokenType.IF},
             {"else", TokenType.ELSE},
             {"scope", TokenType.SCOPE},
@@ -79,9 +78,6 @@ namespace tpl.Engine.Core.Analysis
                 case '<': _tokenCreater(_charExist('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
                 case '>': _tokenCreater(_charExist('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
                 case ':': _tokenCreater(_charExist(':') ? TokenType.DT_DT : TokenType.DT); break;
-                
-                // Spec
-                case '_': if (_charExist('_')) _parseSpec(); break;
 
                 case '\n':
                     _line++;
@@ -114,8 +110,28 @@ namespace tpl.Engine.Core.Analysis
             }
         }
 
+        public void RunPreCommand()
+        {
+            var t = _currentChar();
+
+            switch (t)
+            {
+                case '_':
+                    if (!_charExist('_')) break;
+                    _parseCommand();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         public List<Token> ScanSource()
         {
+            ReturnTokens.Clear();
+            _startof = 0;
+            _position = 0;
+            _line = 0;
             while (!_isEnd())
             {
                 _startof = _position;
@@ -127,12 +143,9 @@ namespace tpl.Engine.Core.Analysis
 
         #region Tools
 
-        private void _parseSpec()
+        private void _parseCommand()
         {
-            while (_isText(_currentChar()))
-            {
-
-            }
+            Console.WriteLine(_skip());
         }
 
         private void _indParse()

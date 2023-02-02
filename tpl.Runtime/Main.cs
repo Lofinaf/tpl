@@ -22,7 +22,7 @@ namespace tpl.Runtime
                     Engine.RegistryScript(args[Argitem.index + 1]);
                 }
             }
-            Engine.RunScript("test.tpl", ScriptRunOptions.DEBUG_LEXICAL_ANALYSIS);
+            Engine.RunScript("test.tpl", ScriptRunOptions.PACKAGE_BUILD);
             Console.ReadKey(true);
         }
     }

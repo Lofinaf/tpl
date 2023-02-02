@@ -30,7 +30,12 @@ namespace tpl.Engine
             }
             var FrontendAnalysis = _engineFrontendAnalysis(File.ReadAllText(script));
 
-            if (options == ScriptRunOptions.DEBUG_LEXICAL_ANALYSIS)
+            if (options is ScriptRunOptions.PACKAGE_BUILD)
+            {
+                File.WriteAllText($"package_{script}", _tokenToPackage(FrontendAnalysis));
+            }
+
+            if (options is ScriptRunOptions.DEBUG_CODE)
             {
                 Lexer.loaderErrors.InterpreterResult.FrontentDebug = FrontendAnalysis;
                 foreach (var Token in FrontendAnalysis)
@@ -40,6 +45,21 @@ namespace tpl.Engine
                 return true;
             }
             return true;
+        }
+
+        private string _tokenToPackage(List<Token> list)
+        {
+            string content = "";
+            foreach (var item in list)
+            {
+                content += $"\n{{TYPE\"{item.Type}\" VALUE\"{item.Type}\" LIT\"{item.Lit}\" LINE\"{item.Line}\"}}";
+            }
+            return content;
+        }
+
+        private List<Token> _packageToToken(string tokens)
+        {
+
         }
 
         private List<Token> _engineFrontendAnalysis(string source)

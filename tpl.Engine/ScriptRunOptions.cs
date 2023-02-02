@@ -2,7 +2,8 @@
 {
     public enum ScriptRunOptions
     {
-        DEBUG_LEXICAL_ANALYSIS,
-        DEFAULT
+        DEBUG_CODE,
+        PACKAGE_BUILD,
+        DEFAULT_CODE,
     }
 }
