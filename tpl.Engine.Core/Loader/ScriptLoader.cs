@@ -10,8 +10,6 @@ namespace tpl.Engine.Core.Loader
         public List<Script> Module;
         public DynamicMemory Memory;
 
-        private Script _local;
-
         public void Init()
         {
             Memory = new DynamicMemory();

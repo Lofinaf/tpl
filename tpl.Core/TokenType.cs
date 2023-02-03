@@ -9,7 +9,7 @@
         SCOPE, IMPORT,
         CONST, CVAR,
         IF, ELSE,
-        MODULE, FROM, THE,
+        MODULE, FROM, PACKAGETOLOAD, _PACKAGE,
 
         // Single
         MINUS, PLUS, DIV, MUL, DOT,
