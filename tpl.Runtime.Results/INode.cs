@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tpl.Engine.Core.Parser
+namespace tpl.Runtime.Results
 {
     public interface INode
     {

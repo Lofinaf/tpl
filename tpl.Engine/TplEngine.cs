@@ -4,6 +4,10 @@ using System.Collections.Generic;
 using tpl.Engine.Core.Loader;
 using tpl.Engine.Core.Analysis;
 using tpl.Core;
+using System.Runtime.InteropServices;
+using tpl.Engine.Core;
+using tpl.Engine.Core.Parser;
+using tpl.Engine.Core.Parser.Statements;
 
 namespace tpl.Engine
 {
@@ -11,10 +15,12 @@ namespace tpl.Engine
     {
         public ScriptLoader ScriptLoader { get; private set; }
         public Lexer Lexer { get; private set; }
+        public Parser Parser { get; private set; }
 
-        public TplEngine(Lexer lexer, ScriptLoader scriptLoader)
+        public TplEngine(Lexer lexer, Parser parser,ScriptLoader scriptLoader)
         {
             Lexer = lexer;
+            Parser = parser;
             ScriptLoader = scriptLoader;
             ScriptLoader.Init();
         }
@@ -28,26 +34,37 @@ namespace tpl.Engine
                 Lexer.loaderErrors.Throw($"File don`t found in the path {script}", ConsoleColor.Red);
                 return false;
             }
+
             var FrontendAnalysis = _engineFrontendAnalysis(File.ReadAllText(script));
+            var SyntaxAnalysis = _engineSyntaxAnalysis(FrontendAnalysis);
 
             if (options is ScriptRunOptions.PACKAGE_BUILD)
             {
-                File.WriteAllText($"package_{script}", _tokenToPackage(FrontendAnalysis));
+                File.WriteAllText($"package_{script}", TokenToPackage(FrontendAnalysis));
             }
 
             if (options is ScriptRunOptions.DEBUG_CODE)
             {
                 Lexer.loaderErrors.InterpreterResult.FrontentDebug = FrontendAnalysis;
+                Lexer.loaderErrors.InterpreterResult.BackendDebug = SyntaxAnalysis.Nodes;
+
+                Console.WriteLine("Lexer returned:");
                 foreach (var Token in FrontendAnalysis)
                 {
                     Console.WriteLine($"Token type: {Token.Type}; Value: {Token.Value}; Literal: {Token.Lit}");
+                }
+
+                Console.WriteLine("Parser returned:");
+                foreach (var Node in SyntaxAnalysis.Nodes)
+                {
+                    Console.WriteLine($"{Node.NodeName}");
                 }
                 return true;
             }
             return true;
         }
 
-        private string _tokenToPackage(List<Token> list)
+        public string TokenToPackage(List<Token> list)
         {
             string content = "";
             foreach (var item in list)
@@ -57,9 +74,10 @@ namespace tpl.Engine
             return content;
         }
 
-        private List<Token> _packageToToken(string tokens)
+        private AST _engineSyntaxAnalysis(List<Token> tokens)
         {
-
+            Parser.Tokens = tokens;
+            return Parser.ScanTokens();
         }
 
         private List<Token> _engineFrontendAnalysis(string source)

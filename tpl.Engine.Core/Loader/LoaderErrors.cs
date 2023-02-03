@@ -21,6 +21,7 @@ namespace tpl.Engine.Core.Loader
 
         public void Throw(string text, ConsoleColor consoleColor)
         {
+            InterpreterResult.ErrorsList.Add(text);
             Console.ForegroundColor = consoleColor;
             Console.WriteLine(text);
             Console.ForegroundColor = ConsoleColor.Black;

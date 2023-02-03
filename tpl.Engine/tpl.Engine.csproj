@@ -41,10 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IEngine.cs" />
     <Compile Include="ScriptRunOptions.cs" />
-    <Compile Include="TplEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TplEngine.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\tpl.Core.Dynamic\tpl.Core.Dynamic.csproj">
