@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace tpl.Engine.Core.Parser
 {
-    internal interface INode
+    public interface INode
     {
-        string Literal { get; set; }
+        string NodeName { get; set; }
     }
 }
