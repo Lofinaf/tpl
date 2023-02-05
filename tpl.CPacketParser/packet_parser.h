@@ -10,7 +10,8 @@
 #ifdef __DLL
     #define RECVESTED_FIELDS    4
 
-    #define THROW_ERROR(code)   longjmp(env, code)
+    #define VALID_CODE(code)    PARSE_RESULT_##code
+    #define THROW_ERROR(code)   longjmp(env, VALID_CODE(code))
 
     #define KEY(p)   ((struct Key_Value *)(p))->key
     #define VALUE(p) ((struct Key_Value *)(p))->value
@@ -25,15 +26,11 @@
     extern "C" {
 #endif
 
+#define ENTRY(a, b) PARSE_RESULT_##a,
 typedef enum {
-    PARSE_RESULT_SUCCESS = 0,
-    PARSE_RESULT_BAD_INPUT,
-    PARSE_RESULT_INVALID_FIELD,
-    PARSE_RESULT_NOT_SUCH_FILE,
-    PARSE_RESULT_EMPTY_FILE,
-    PARSE_RESULT_LARGE_FILE,
-    PARSE_RESULT_ACCESS_DENIED,
+    #include "error_table.def"
 } Parse_Result;
+#undef ENTRY
 
 __attribute__((packed)) struct Key_Value {
     char key  [MAX_KEY];
@@ -46,6 +43,19 @@ struct Token_Table {
     Token *tokens;
     size_t ntokens;
 };
+
+#ifdef __DLL
+    /* Tokens processing */
+    static Key_Value *next_field(char **);
+    static Token next_token(char **, bool *);
+    /* Table */
+    static void table_append(struct Token_Table * const, const Token);
+    static void table_destroy(struct Token_Table *);
+    static struct Token_Table *parse_tokens(FILE * const);
+    /* Json generation */
+    static void generate_json_object(const Token, FILE * const);
+    static void generate_json_from_table(const struct Token_Table *, FILE * const);
+#endif
 
 SPEC Parse_Result parse_packet(const char *packet_path, const char *output_path);
 SPEC const char *parse_result_to_cstr(Parse_Result const val);
