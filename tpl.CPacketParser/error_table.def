@@ -1,0 +1,7 @@
+ENTRY(SUCCESS, "No error")
+ENTRY(BAD_INPUT, "Bad input")
+ENTRY(INVALID_FIELD, "Unknown field")
+ENTRY(NOT_SUCH_FILE, "Not such file")
+ENTRY(EMPTY_FILE, "Empty file")
+ENTRY(LARGE_FILE, "File is too large")
+ENTRY(ACCESS_DENIED, "Cannot open output file")

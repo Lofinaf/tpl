@@ -5,12 +5,12 @@
 #include <ctype.h>
 #include <stdbool.h>
 
-#define __DLL
+#define __DLL               /* Use header inside a dll file */
 #include "packet_parser.h"
 
 static jmp_buf env;
 
-static Key_Value *next_field(const char **rest)
+static Key_Value *next_field(char **rest)
 {
     Key_Value kv = malloc(sizeof(struct Key_Value));
     assert( kv != NULL );
@@ -19,13 +19,13 @@ static Key_Value *next_field(const char **rest)
     while (isspace(**rest))
         ++*rest;
 
-    char *tok_rest = (char *)*rest, *key = strtok_r(tok_rest, "\"", &tok_rest);
+    char *tok_rest = *rest, *key = strtok_r(tok_rest, "\"", &tok_rest);
 
     if (key == NULL)
-        THROW_ERROR(PARSE_RESULT_BAD_INPUT);
+        THROW_ERROR(BAD_INPUT);
 
     if (strcmp(key, "TYPE") && strcmp(key, "VALUE") && strcmp(key, "LIT") && strcmp(key, "LINE"))
-        THROW_ERROR(PARSE_RESULT_INVALID_FIELD);
+        THROW_ERROR(INVALID_FIELD);
     
     strcpy(KEY(kv), key);
     if (tok_rest[0] == '\"'){
@@ -37,7 +37,7 @@ static Key_Value *next_field(const char **rest)
     char *value = strtok_r(tok_rest, "\"", &tok_rest);
 
     if (value == NULL)
-        THROW_ERROR(PARSE_RESULT_BAD_INPUT);
+        THROW_ERROR(BAD_INPUT);
 
     strcpy(VALUE(kv), value);
 
@@ -45,7 +45,7 @@ static Key_Value *next_field(const char **rest)
     return kv;
 }
 
-static Token next_token(const char **rest, bool *last_token)
+static Token next_token(char **rest, bool *last_token)
 {
     assert( rest );
 
@@ -53,7 +53,7 @@ static Token next_token(const char **rest, bool *last_token)
     assert( token );
 
     if (**rest != '{')
-        THROW_ERROR(PARSE_RESULT_BAD_INPUT);
+        THROW_ERROR(BAD_INPUT);
 
     (* rest) += 1; /* { */
 
@@ -63,7 +63,7 @@ static Token next_token(const char **rest, bool *last_token)
     }
     
     if (**rest != '}')
-        THROW_ERROR(PARSE_RESULT_BAD_INPUT);
+        THROW_ERROR(BAD_INPUT);
 
     (* rest) += 1; /* } */
 
@@ -82,10 +82,10 @@ static void table_append(struct Token_Table * const table, const Token tok)
 static void table_destroy(struct Token_Table *table)
 {
     assert( table );
-    for(size_t j = 0; j < table->ntokens; j++){
-        for (int i = 0; i < RECVESTED_FIELDS; i++)
-            free(table->tokens[j][i]);
-        free(table->tokens[j]);
+    for(size_t token = 0; token < table->ntokens; token++){
+        for (int field = 0; field < RECVESTED_FIELDS; field++)
+            free(table->tokens[token][field]);
+        free(table->tokens[token]);
     }
     free(table);
 }
@@ -101,12 +101,12 @@ static struct Token_Table *parse_tokens(FILE * const stream)
     fseek(stream, 0, SEEK_END);
     long file_raw_size = ftell(stream);
     if (!file_raw_size || file_raw_size < 0)
-        THROW_ERROR(PARSE_RESULT_EMPTY_FILE);
+        THROW_ERROR(EMPTY_FILE);
 
     rewind(stream);
     char *file_raw = malloc(file_raw_size + 1);
     if (!file_raw)
-        THROW_ERROR(PARSE_RESULT_LARGE_FILE);
+        THROW_ERROR(LARGE_FILE);
 
     fread(file_raw, 1, file_raw_size, stream);
     rewind(stream);
@@ -171,7 +171,7 @@ Parse_Result parse_packet(const char *packet_path, const char *output_path)
 
     if (!source){
         perror(packet_path);
-        THROW_ERROR(PARSE_RESULT_NOT_SUCH_FILE);
+        THROW_ERROR(NOT_SUCH_FILE);
     }
     
     struct Token_Table *table = parse_tokens(source);
@@ -181,41 +181,27 @@ Parse_Result parse_packet(const char *packet_path, const char *output_path)
 
     if (!out){
         perror(output_path);
-        THROW_ERROR(PARSE_RESULT_ACCESS_DENIED);
+        THROW_ERROR(ACCESS_DENIED);
     }
 
     generate_json_from_table(table, out);
     table_destroy(table);
 
     fclose(out);
-    return PARSE_RESULT_SUCCESS;
+    return VALID_CODE(SUCCESS);
 }
 
 const char *parse_result_to_cstr(Parse_Result const val)
 {
+    #define ENTRY(a, b)\
+    case PARSE_RESULT_##a:\
+        result = b;\
+        break;
+
     const char *result;
     switch (val){
-    case PARSE_RESULT_SUCCESS: 
-        result = "No error.";
-        break;
-    case PARSE_RESULT_BAD_INPUT:
-        result = "Bad input.";
-        break;
-    case PARSE_RESULT_INVALID_FIELD:
-        result = "Unknown field.";
-        break;
-    case PARSE_RESULT_NOT_SUCH_FILE:
-        result = "Not such file.";
-        break;
-    case PARSE_RESULT_EMPTY_FILE:
-        result = "Empty file.";
-        break;
-    case PARSE_RESULT_LARGE_FILE:
-        result = "File is too large.";
-        break;
-    case PARSE_RESULT_ACCESS_DENIED:
-        result = "Cannot open output file.";
-        break;
+        #include "error_table.def"
+        #undef ENTRY
     default:
         result = "Unknown error.";
         break;
