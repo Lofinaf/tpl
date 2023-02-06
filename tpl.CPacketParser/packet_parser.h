@@ -46,6 +46,7 @@ struct Token_Table {
 
 #ifdef __DLL
     /* Tokens processing */
+    static void skip_space(char **);
     static Key_Value *next_field(char **);
     static Token next_token(char **, bool *);
     /* Table */

@@ -10,14 +10,19 @@
 
 static jmp_buf env;
 
+static void skip_space(char **source)
+{
+    while (isspace(**source))
+        ++*source;
+}
+
 static Key_Value *next_field(char **rest)
 {
     Key_Value kv = malloc(sizeof(struct Key_Value));
     assert( kv != NULL );
     memset(kv, 0, sizeof(struct Key_Value));
 
-    while (isspace(**rest))
-        ++*rest;
+    skip_space(rest);
 
     char *tok_rest = *rest, *key = strtok_r(tok_rest, "\"", &tok_rest);
 
@@ -52,6 +57,8 @@ static Token next_token(char **rest, bool *last_token)
     Token token = malloc(RECVESTED_FIELDS * sizeof(Key_Value));
     assert( token );
 
+    skip_space( rest );
+
     if (**rest != '{')
         THROW_ERROR(BAD_INPUT);
 
@@ -67,8 +74,7 @@ static Token next_token(char **rest, bool *last_token)
 
     (* rest) += 1; /* } */
 
-    while (isspace(**rest))
-        ++*rest;
+    skip_space(rest);
 
     return token;
 }
