@@ -11,18 +11,12 @@ namespace tpl.Engine.Core
     public abstract class Node
     {
         public abstract void Accept(Visit visit);
-        public string State { get; set; }
     }
 
     public abstract class Visit
     {
         public abstract PrintStatement VisitElementUnaryPrint(PrintStatement printStatement);
         public abstract void VisitElementBinaryOperator(BinaryOperatorExpression binaryOperatorExpression);
-    }
-
-    public abstract class VisitorElement
-    {
-        public abstract void Accept();
     }
 
     public class Visitor : Visit

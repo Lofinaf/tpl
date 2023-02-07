@@ -56,25 +56,22 @@ namespace tpl.Engine.Core.Parser
 
         private void _parseExpression()
         {
-            if (_peekToken().Type is TokenType.NUMBER) _jumpToNext();
-            if (_peekToken().Type is TokenType.PLUS)
+            if (_peekToken().Type == TokenType.PLUS)
             {
                 _parseOperator();
-                _jumpToNext();
             }
+            _jumpToNext();
         }
 
         private void _parseOperator()
         {
             var expr = new BinaryOperatorExpression
             {
-                Operator = Tokens[_position]
+                Operator = _peekToken(),
+                Left = _previous(),
+                Right = _advance()
             };
-
-            expr.Left = _previous();
-            expr.Right = _advance();
-
-            AST.Nodes.Add(expr);
+            AST.Add(expr);
         }
 
         private void _parsePackage()
@@ -92,30 +89,24 @@ namespace tpl.Engine.Core.Parser
             {
                 NodeName = "PrintStatement"
             };
-
             _jumpToNext();
-            if (Tokens[_position].Type is TokenType.LPAR)
+            switch (_peekToken().Type)
             {
-                _jumpToNext();
-                if (Tokens[_position].Type is TokenType.NUMBER)
-                {
+                case TokenType.STRING:
                     statement.LiteralToPrint = _peekToken().Lit;
-                    return;
-                }
-                if (Tokens[_position].Type is TokenType.STRING)
-                {
-                    var local_t = Tokens[_position];
-                    _jumpToNext();
-                    if (Tokens[_position].Type is TokenType.RPAR)
-                    {
-                        statement.LiteralToPrint = local_t.Lit;
-                        AST.Nodes.Add(statement);
-                        return;
-                    }
-                    LoaderErrors.Throw($"Undermited print, token position: {_position}", ConsoleColor.Blue);
-                }
+                    goto GetOut;
+
+                case TokenType.IDN:
+                    statement.LiteralToPrint = $"__{_peekToken().Value}";
+                    goto GetOut;
+
+                default:
+                    break;
             }
-            LoaderErrors.Throw($"Print statement not valid, token position: {_position}", ConsoleColor.Blue);
+
+        GetOut:
+            AST.Add(statement);
+            return;
         }
         #endregion
 

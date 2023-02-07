@@ -71,8 +71,18 @@ namespace tpl.Engine
                 Console.WriteLine("Parser return:");
                 foreach (var Node in SyntaxAnalysis.Nodes)
                 {
-                    Visitor visitor;
-                    Node.Accept(visitor);
+                    if (Node.GetType() == typeof(PrintStatement))
+                    {
+                        var PrintNode = (PrintStatement)Node;
+                        Console.WriteLine($"<UnaryPrint>\n\t|\n\t------ {PrintNode.LiteralToPrint}");
+                    }
+                    if (Node.GetType() == typeof(BinaryOperatorExpression))
+                    {
+                        var BinOpNode = (BinaryOperatorExpression)Node;
+                        Console.WriteLine($"<BinaryOperator>\n\t|\n\t------ Left: {BinOpNode.Left.Lit}");
+                        Console.WriteLine($"\t|\n\t------ Operator: {BinOpNode.Operator.Value}");
+                        Console.WriteLine($"\t|\n\t------ Right: {BinOpNode.Right.Lit}");
+                    }
                 }
                 return true;
             }
