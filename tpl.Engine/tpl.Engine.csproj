@@ -58,10 +58,6 @@
       <Project>{94e63192-d009-4930-9ae6-06156ffd4182}</Project>
       <Name>tpl.Engine.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
-      <Project>{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}</Project>
-      <Name>tpl.Runtime.Results</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

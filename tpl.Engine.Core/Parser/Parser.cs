@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using tpl.Core;
 using tpl.Engine.Core.Parser.Statements;
 using tpl.Runtime.Results;
+using tpl.Engine.Core.Parser.Expressions;
 
 namespace tpl.Engine.Core.Parser
 {
@@ -36,6 +37,7 @@ namespace tpl.Engine.Core.Parser
                     break;
 
                 default:
+                    _parseExpression();
                     break;
             }
         }
@@ -51,10 +53,33 @@ namespace tpl.Engine.Core.Parser
         }
 
         #region ParsingOtherThings
+
+        private void _parseExpression()
+        {
+            if (_peekToken().Type is TokenType.NUMBER) _jumpToNext();
+            if (_peekToken().Type is TokenType.PLUS)
+            {
+                _parseOperator();
+                _jumpToNext();
+            }
+        }
+
+        private void _parseOperator()
+        {
+            var expr = new BinaryOperatorExpression
+            {
+                Operator = Tokens[_position]
+            };
+
+            expr.Left = _previous();
+            expr.Right = _advance();
+
+            AST.Nodes.Add(expr);
+        }
+
         private void _parsePackage()
         {
             _jumpToNext();
-
             if (Tokens[_position].Type is TokenType.STRING)
             {
                 File.WriteAllText(Tokens[_position].Lit.ToString(), TokenToPackage(Tokens));
@@ -67,11 +92,16 @@ namespace tpl.Engine.Core.Parser
             {
                 NodeName = "PrintStatement"
             };
-            _jumpToNext();
 
+            _jumpToNext();
             if (Tokens[_position].Type is TokenType.LPAR)
             {
                 _jumpToNext();
+                if (Tokens[_position].Type is TokenType.NUMBER)
+                {
+                    statement.LiteralToPrint = _peekToken().Lit;
+                    return;
+                }
                 if (Tokens[_position].Type is TokenType.STRING)
                 {
                     var local_t = Tokens[_position];
@@ -90,8 +120,10 @@ namespace tpl.Engine.Core.Parser
         #endregion
 
         #region Tools
+        private Token _peekToken() => (Tokens[_position]);
         private bool _isEnd() => (_position >= Tokens.Count);
         private Token _advance() => (Tokens[_position++]);
+        private Token _previous() => (Tokens[_position--]);
         private void _jumpToNext()
         {
             if (_isEnd()) return;

@@ -7,9 +7,15 @@ using tpl.Runtime.Results;
 
 namespace tpl.Engine.Core.Parser.Statements
 {
-    public class PrintStatement : INode
+    public class PrintStatement : Node
     {
         public string NodeName { get; set; }
         public object LiteralToPrint { get; set; }
+
+        public override void Accept(Visit visit)
+        {
+            visit.VisitElementUnaryPrint(this);
+        }
+        public PrintStatement Get() => (this);
     }
 }

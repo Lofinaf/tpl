@@ -8,11 +8,26 @@ using System.Runtime.InteropServices;
 using tpl.Engine.Core;
 using tpl.Engine.Core.Parser;
 using tpl.Engine.Core.Parser.Statements;
+using tpl.Engine.Core.Parser.Expressions;
 
 namespace tpl.Engine
 {
     public sealed class TplEngine : IEngine
     {
+        public enum Parse_Result {
+            SUCCESS,
+            BAD_INPUT,
+            INVALID_FIELD,
+            NOT_SUCH_FILE,
+            EMPTY_FILE,
+            LARGE_FILE,
+            ACCESS_DENIED
+        }
+
+        // Functions from dll written on c
+        [DllImport("packet_parser.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern Parse_Result parse_packet(string packet_path, string output_path);
+
         public ScriptLoader ScriptLoader { get; private set; }
         public Lexer Lexer { get; private set; }
         public Parser Parser { get; private set; }
@@ -25,7 +40,7 @@ namespace tpl.Engine
             ScriptLoader.Init();
         }
 
-        public void RegistryScript(string path) => ScriptLoader.Module.Add(new Core.Script("1.0.0.0", path));
+        public void RegistryScript(string path) => ScriptLoader.Module.Add(new Script("1.0.0.0", path));
 
         public bool RunScript(string script, ScriptRunOptions options)
         {
@@ -48,16 +63,16 @@ namespace tpl.Engine
                 Lexer.loaderErrors.InterpreterResult.FrontentDebug = FrontendAnalysis;
                 Lexer.loaderErrors.InterpreterResult.BackendDebug = SyntaxAnalysis.Nodes;
 
-                Console.WriteLine("Lexer returned:");
+                Console.WriteLine("Lexer return:");
                 foreach (var Token in FrontendAnalysis)
                 {
                     Console.WriteLine($"Token type: {Token.Type}; Value: {Token.Value}; Literal: {Token.Lit}");
                 }
-
-                Console.WriteLine("Parser returned:");
+                Console.WriteLine("Parser return:");
                 foreach (var Node in SyntaxAnalysis.Nodes)
                 {
-                    Console.WriteLine($"{Node.NodeName}");
+                    Visitor visitor;
+                    Node.Accept(visitor);
                 }
                 return true;
             }

@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InterpreterResult.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -98,10 +99,6 @@
     <ProjectReference Include="..\tpl.Engine\tpl.Engine.csproj">
       <Project>{ae5812a1-0b17-43b7-8794-5a5cef5adbe1}</Project>
       <Name>tpl.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
-      <Project>{0cb02f0d-ea3f-48c6-b1c2-a62cc162f585}</Project>
-      <Name>tpl.Runtime.Results</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

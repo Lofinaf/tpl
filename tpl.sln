@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		readme.txt = readme.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Runtime.Results", "tpl.Runtime.Results\tpl.Runtime.Results.csproj", "{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Core.Variables", "tpl.Core.Variables\tpl.Core.Variables.csproj", "{EBC2ADD2-A804-4BBD-A626-F02143A9BF65}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tpl.Core.Dynamic", "tpl.Core.Dynamic\tpl.Core.Dynamic.csproj", "{E0617101-CB00-469D-9876-03DEB5DDA81F}"
@@ -32,10 +30,6 @@ Global
 		{36579F41-7EE2-49B7-AF2E-B9DA67F9E1E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{36579F41-7EE2-49B7-AF2E-B9DA67F9E1E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{36579F41-7EE2-49B7-AF2E-B9DA67F9E1E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EBC2ADD2-A804-4BBD-A626-F02143A9BF65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EBC2ADD2-A804-4BBD-A626-F02143A9BF65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBC2ADD2-A804-4BBD-A626-F02143A9BF65}.Release|Any CPU.ActiveCfg = Release|Any CPU

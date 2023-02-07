@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AST.cs" />
     <Compile Include="IEngine.cs" />
-    <Compile Include="Parser\AST.cs" />
+    <Compile Include="InterpreterResult.cs" />
     <Compile Include="IScript.cs" />
     <Compile Include="Lexer\Lexer.cs" />
     <Compile Include="Loader\LoaderErrors.cs" />
     <Compile Include="Loader\ScriptLoader.cs" />
+    <Compile Include="Parser\Expressions\BinaryOperatorExpression.cs" />
     <Compile Include="Parser\Parser.cs" />
     <Compile Include="Parser\Statements\PrintStatement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -63,13 +65,7 @@
       <Project>{b88b4103-99fd-4626-95db-7856aa24fc65}</Project>
       <Name>tpl.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\tpl.Runtime.Results\tpl.Runtime.Results.csproj">
-      <Project>{0CB02F0D-EA3F-48C6-B1C2-A62CC162F585}</Project>
-      <Name>tpl.Runtime.Results</Name>
-    </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Parser\Expressions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
